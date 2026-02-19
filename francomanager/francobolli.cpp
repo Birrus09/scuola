@@ -12,9 +12,15 @@ struct francobollo {
 	string valuta;
 };
 
+
+void mostra(francobollo francobolli[MAXF], int N){
+    for (int i = 0; i < N; i++){
+        cout << i + 1 << ") " << francobolli[i].nome << ", " << francobolli[i].stato << ", " << francobolli[i].anno << ", " << francobolli[i].valore << ", " << francobolli[i].valuta << endl;
+    }
+}
 int menu(){
     int opt = 0;
-    cout << "0) quit, 1) crea francobollo, 2) visualizza francobolli, 3) leggi da file, 4) scrivi su file" << endl;
+    cout << "0) quit, 1) crea francobollo, 2) visualizza francobolli, 3) leggi da file, 4) scrivi su file, 5) modifica francobollo" << endl;
 
     cin >> opt;
     return opt;
@@ -31,7 +37,7 @@ francobollo CreaFrancobollo(string nome, string stato, int anno, float valore, s
 
 }
 
-string encryptDecrypt(const string &data, const string &key) {
+string encryptDecrypt(string &data, string &key) {
     string result = data;
     int keyLength = key.length();
     for (size_t i = 0; i < data.length(); ++i) {
@@ -43,7 +49,7 @@ string encryptDecrypt(const string &data, const string &key) {
 int main() {
     int N = 0;
     string nomefile;
-    int opt = 0;
+    int opt = 0, operatore;
     string nomet, statot, valutat;
     int annot;
     float valoret;
@@ -55,6 +61,10 @@ int main() {
         opt = menu();
 
         if (opt == 1){
+            if (N >= MAXF) {
+                cout << "hai già abbastanza francobolli" << endl;
+                continue;
+            }
             cout << "inserisci nome, stato, anno, valore e valuta" << endl;
             cin >> nomet >> statot >> annot >> valoret >> valutat;
             francobolli[N] = CreaFrancobollo(nomet, statot, annot, valoret, valutat);
@@ -63,18 +73,9 @@ int main() {
         }
 
         if (opt == 2){
-            for(int i = 0; i<N; i++){
-                cout << "francobollo " << i+1 << endl;
-                cout << "nome: " << francobolli[i].nome << endl;
-                cout << "stato: " << francobolli[i].stato << endl;
-                cout << "anno: " << francobolli[i].anno << endl;
-                cout << "valore: " << francobolli[i].valore << endl;
-                cout << "valuta: " << francobolli[i].valuta << endl << endl;
-                }
-
+            mostra(francobolli, N);
         }
 
-        // Modifica nella sezione di lettura da file
         if (opt == 3){
             cout << "inserisci nome file" << endl;
             cin >> nomefile;
@@ -87,7 +88,7 @@ int main() {
             filein >> check;
 
             if (check == password){
-                while(!filein.eof()){
+                while(filein >> nomet >> statot >> annot >> valoret >> valutat){
                     filein >> nomet >> statot >> annot >> valoret >> valutat;
                     nomet = encryptDecrypt(nomet, secretkey);
                     statot = encryptDecrypt(statot, secretkey);
@@ -95,15 +96,15 @@ int main() {
                     francobolli[N] = CreaFrancobollo(nomet, statot, annot, valoret, valutat);
                     N++;
                 }
+
                 filein.close();
             }
             else{
-                cout << "al ladro!" << endl;
+                cout << "ladro di francobolli!" << endl;
             }
             
         }
 
-        // Modifica nella sezione di scrittura su file
         if (opt == 4){
             cout << "inserisci nome file" << endl; 
             cin >> nomefile;
@@ -123,6 +124,17 @@ int main() {
             }
             fileout.close();
         }
+
+        if (opt == 5){
+            mostra(francobolli, N);
+            cout << "inserisci il numero del francobollo da modificare" << endl;
+            cin >> operatore;
+                cout << "inserisci nome, stato, anno, valore e valuta" << endl;
+            cin >> nomet >> statot >> annot >> valoret >> valutat;
+            francobolli[operatore - 1] = CreaFrancobollo(nomet, statot, annot, valoret, valutat);
+        }
+
+
     } while (opt!=0);
 
 
