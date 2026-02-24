@@ -36,7 +36,7 @@ francobollo CreaFrancobollo(string nome, string stato, int anno, float valore, s
     return f;
 
 }
-
+/*
 string encryptDecrypt(string &data, string &key) {
     string result = data;
     int keyLength = key.length();
@@ -45,6 +45,7 @@ string encryptDecrypt(string &data, string &key) {
     }
     return result;
 }
+*/
 
 int main() {
     int N = 0;
@@ -80,16 +81,24 @@ int main() {
             cout << "inserisci nome file" << endl;
             cin >> nomefile;
             ifstream filein(nomefile);
-
+/*
             cout << "questi sono i tuoi francobolli? inserisci la password!" << endl;
             cin >> password;
             password = encryptDecrypt(password, secretkey);
 
             filein >> check;
 
-            if (check == password){
+            while (check == password){
                 while(filein >> nomet >> statot >> annot >> valoret >> valutat){
-                    filein >> nomet >> statot >> annot >> valoret >> valutat;
+                    nomet = encryptDecrypt(nomet, secretkey);
+                    statot = encryptDecrypt(statot, secretkey);
+                    valutat = encryptDecrypt(valutat, secretkey);
+                    francobolli[N] = CreaFrancobollo(nomet, statot, annot, valoret, valutat);
+                    N++;
+                }
+                
+                // Handle last line that might not be read by while condition
+                if(filein >> nomet >> statot >> annot >> valoret >> valutat){
                     nomet = encryptDecrypt(nomet, secretkey);
                     statot = encryptDecrypt(statot, secretkey);
                     valutat = encryptDecrypt(valutat, secretkey);
@@ -102,11 +111,16 @@ int main() {
             else{
                 cout << "ladro di francobolli!" << endl;
             }
-            
+*/        
+                while(filein >> nomet >> statot >> annot >> valoret >> valutat){
+                        francobolli[N] = CreaFrancobollo(nomet, statot, annot, valoret, valutat);
+                        N++;
+                    }
+                    filein.close();
         }
 
         if (opt == 4){
-            cout << "inserisci nome file" << endl; 
+            /*cout << "inserisci nome file" << endl; 
             cin >> nomefile;
             ofstream fileout(nomefile);
 
@@ -121,6 +135,18 @@ int main() {
                         << francobolli[i].anno << " "
                         << francobolli[i].valore << " "
                         << encryptDecrypt(francobolli[i].valuta, secretkey) << endl;
+            }
+            fileout.close();
+            */
+            cout << "inserisci nome file" << endl;
+            cin >> nomefile;
+            ofstream fileout(nomefile);
+            for (int i = 0; i < N; i++) {
+                fileout << francobolli[i].nome << " "
+                        << francobolli[i].stato << " "
+                        << francobolli[i].anno << " "
+                        << francobolli[i].valore << " "
+                        << francobolli[i].valuta << endl;
             }
             fileout.close();
         }
