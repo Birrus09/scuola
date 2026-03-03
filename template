@@ -1,0 +1,21 @@
+#include <iostream>
+
+using namespace std;
+
+void menu(){
+    cout << "0) quit" << endl;
+}
+
+int main(){
+    int opt;
+    do{
+        menu();
+        cin >> opt;
+        if (opt == 1){
+
+        }
+
+    } while (opt != 0);
+
+    return 0;
+}
