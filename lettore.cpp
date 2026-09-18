@@ -85,19 +85,19 @@ int main() {
 
         switch(choice){
             case (1):
-                inizio = clock()
+                inizio = clock();
                 cout << FindMin(opera, lunghezza) << "impiegato " << (inizio-clock())/(CLOCKS_PER_SEC/1000.0);
                 break;
             case (2):
-                inizio = clock()
+                inizio = clock();
                 cout << FindMax(opera, lunghezza) << "impiegato " << (inizio-clock())/(CLOCKS_PER_SEC/1000.0);
                 break;
             case (3):
-                inizio = clock()
+                inizio = clock();
                 cout << mediavettore(opera, lunghezza) << "impiegato " << (inizio-clock())/(CLOCKS_PER_SEC/1000.0);
                 break;
             case (4):
-                inizio = clock()
+                inizio = clock();
                 cout << devstandard(opera, lunghezza) << "impiegato " << (inizio-clock())/(CLOCKS_PER_SEC/1000.0);
                 break;
         }
