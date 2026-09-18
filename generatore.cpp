@@ -8,7 +8,7 @@ using namespace std;
 
 int main() {
     int Maxn, Minn, N, range;
-    clock_t inizio = clock()
+    clock_t inizio = clock();
     string nomefile;
 
     cout << " inserisci minimo, massimo e numeri da generare (max 8192): ";
@@ -24,6 +24,6 @@ int main() {
     for(int i = 0; i <N; i++){
         outfile << rand() % range + Minn << endl;
     }
-    cout << "impiegato " << (inizio-clock())/(CLOCKS_PER_SEC*1000.0)
+    cout << "impiegato " << (inizio-clock())/(CLOCKS_PER_SEC*1000.0);
     outfile.close();
 }
